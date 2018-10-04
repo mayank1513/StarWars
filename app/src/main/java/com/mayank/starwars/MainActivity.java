@@ -4,15 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -34,7 +30,7 @@ public class MainActivity extends Activity {
             + "To show live ads, replace the ad unit ID in res/values/strings.xml with your own ad unit ID.";
 
     String baseUrl = "https://swapi.co/api/people/?format=json";
-    String nextUrl = null;
+    public static String nextUrl = null;
     ListView listView;
     Button btn;
     FetchData fetchData;
@@ -88,6 +84,7 @@ public class MainActivity extends Activity {
                     sb.append(line);
                 }
                 JSONObject jsonObject = new JSONObject(sb.toString());
+                nextUrl = null;
                 nextUrl = jsonObject.getString("next");
                 JSONArray jsonArray = jsonObject.getJSONArray("results");
                 pos = characters.size();
@@ -111,7 +108,7 @@ public class MainActivity extends Activity {
                 btn.setVisibility(View.VISIBLE);
             }
             progressBar.setVisibility(View.GONE);
-            listView.setAdapter(new Adapter());
+            listView.setAdapter(new Adapter(MainActivity.this));
             listView.setSelection(pos - 1);
         }
     }
@@ -120,6 +117,7 @@ public class MainActivity extends Activity {
         int id = view.getId();
         if(id == R.id.loadMore){
             nextUrl = null;
+            characters.clear();
             fetchData = new FetchData();
             fetchData.execute(baseUrl);
             btn.setVisibility(View.GONE);
@@ -142,43 +140,7 @@ public class MainActivity extends Activity {
 //        Toast.makeText(this, TOAST_TEXT, Toast.LENGTH_LONG).show();
     }
 
-    public class Adapter extends BaseAdapter{
-        @Override
-        public int getCount() {
-            if(nextUrl == null)
-                return characters.size();
-            else
-                return characters.size() + 1;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            TextView textView;
-//            implementing viewholder pattern - in case we need to go for more complicated list item, this would save resources
-            if(view == null){
-                view = LayoutInflater.from(MainActivity.this).inflate(R.layout.list_item, viewGroup, false);
-                textView = view.findViewById(R.id.name);
-                view.setTag(textView);
-            } else
-                textView = (TextView) view.getTag();
-            if(i == characters.size()) {
-                textView.setText(R.string.load_more);
-            } else
-                textView.setText(characters.get(i).Name);
-            return view;
-        }
-    }
-    ArrayList<Character> characters = new ArrayList<>();
+    public static ArrayList<Character> characters = new ArrayList<>();
     public class Character{
         String Name, createdOn, Height, Mass;
         Character(JSONObject jsonObject) throws JSONException {
