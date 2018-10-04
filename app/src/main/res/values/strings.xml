@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Star Wars</string>
+    <string name="app_name"><i><b>Star Wars</b></i></string>
     <string name="action_settings">Settings</string>
 
     <string name="hello_world">Hello world!</string>
@@ -8,4 +8,6 @@
         For more information, see https://support.google.com/admob/answer/3052638
     <!- -->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="load_more"><i><font color="red">Load More Characters…</font></i></string>
+    <string name="try_again">Error Occurred!!! Try Again</string>
 </resources>

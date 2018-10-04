@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="@dimen/list_height">
+    <ImageView
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_width="@dimen/list_height"
+        android:layout_height="@dimen/list_height" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/list_height"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</FrameLayout>
