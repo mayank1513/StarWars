@@ -10,10 +10,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,10 +21,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-    // Remove the below line after defining your own ad unit ID.
-    private static final String TOAST_TEXT = "Test ads are being shown. "
-            + "To show live ads, replace the ad unit ID in res/values/strings.xml with your own ad unit ID.";
-
     String baseUrl = "https://swapi.co/api/people/?format=json";
     public static String nextUrl = null;
     ListView listView;
@@ -43,7 +35,6 @@ public class MainActivity extends Activity {
         btn = findViewById(R.id.loadMore);
         fetchData = new FetchData();
         fetchData.execute(baseUrl);
-//        initializeAdd();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -122,22 +113,6 @@ public class MainActivity extends Activity {
             fetchData.execute(baseUrl);
             btn.setVisibility(View.GONE);
         }
-    }
-
-    public void initializeAdd(){
-        // Load an ad into the AdMob banner view.
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
-        AdView adView = (AdView) findViewById(R.id.adView);
-// To prevent removing adds by hacking into xml files
-//        adView.setAdSize(AdSize.BANNER);
-//        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .setRequestAgent("android_studio:ad_template").build();
-        adView.loadAd(adRequest);
-
-        // Toasts the test ad message on the screen. Remove this after defining your own ad unit ID.
-//        Toast.makeText(this, TOAST_TEXT, Toast.LENGTH_LONG).show();
     }
 
     public static ArrayList<Character> characters = new ArrayList<>();
